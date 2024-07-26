@@ -11,32 +11,19 @@ from sklearn import tree
 from sklearn.ensemble import RandomForestClassifier
 from sklearn.ensemble import GradientBoostingClassifier
 from sklearn.naive_bayes import GaussianNB
-from sklearn.neighbors import RadiusNeighborsClassifier
-from sklearn.pipeline import Pipeline
-from sklearn.preprocessing import StandardScaler
 
-# cwd = os.getcwd()
 path = fr"C:\Users\redel\Desktop\Code\SHINE\Project\eye_dataset"
 cwd = os.chdir(path)
-# print("Current working directory:", cwd) 
-
 dir_list = os.listdir(cwd) 
-# print("Files and directories in '", cwd, "' :") 
-# print(dir_list) 
 
 cataract_path = path + "\\" + dir_list[0]
-# diabetic_path = path + "\\" + dir_list[1]
-# glaucoma_path = path + "\\" + dir_list[2]
 normal_path = path + "\\" + dir_list[3]
 
 cataract_list = os.listdir(cataract_path)
-# diabetic_list = os.listdir(diabetic_path)
-# glaucoma_list = os.listdir(glaucoma_path)
 normal_list = os.listdir(normal_path)
 
 X = []
 y = [] # 0 - normal, 1 - cataract
-# print(dataset_size)
 
 total = 0
 
@@ -67,10 +54,6 @@ print(f"Processed {total} images")
 
 X = np.array(X)
 d = X.shape[1]
-# print(d)
-# print("X before:", X.shape)
-# print(X[70:75, 70:75])
-
 
 for i in range(100):
     rand_index = random.randint(0,total-1)
@@ -80,8 +63,6 @@ for i in range(100):
     y = np.delete(y, 0)
     X = np.insert(X, rand_index, temp_x, axis=0)
     y = np.insert(y, rand_index, temp_y)
-
-
 
 x_train, x_test, y_train, y_test = train_test_split(X, y, test_size=0.25, random_state=0)
 
@@ -126,7 +107,3 @@ clf.fit(x_train, y_train)
 clf.predict(x_test)
 score = clf.score(x_test, y_test)
 print(f"Gradient Boosting Trees: {score}")
-
-# clf = GradientBoostingClassifier(n_estimators=100, learning_rate=1.0,
-#     max_depth=1, random_state=0).fit(x_train, y_train)
-# clf.score(x_test, y_test)

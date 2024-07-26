@@ -23,11 +23,6 @@ def out(s1, s2, m, z):
     return result
 
 def error_fn(y_hat, y):
-    # if torch.all(y_hat == torch.ones_like(y)):
-    #     y_hat = torch.full_like(y, 0.999999999)
-    # if torch.all(y_hat == torch.zeros_like(y)):
-    #     y_hat = torch.full_like(y, 0.000000001)
-
     if (y_hat == 1):
         y_hat = 0.999999999
     if (y_hat == 0):
@@ -50,17 +45,10 @@ def get_grad(w, b, X, y, m = 0.01):
         sigmoid = nn.Sigmoid()
 
         # Weights
-        # print("X:", X.shape)
-        # print("w:", w.shape)
-        # print("z_w:", z_w.shape)
-        # print("X[i]:", torch.unsqueeze(X[i],1))
         mm1 = torch.matmul( (w+m*z_w).T , torch.unsqueeze(X[i],1))
-        # print(mm1 + b)
         s1 = sigmoid(mm1 + b)
-
         mm2 = torch.matmul( (w-m*z_w).T , torch.unsqueeze(X[i],1))
         s2 = sigmoid(mm2 + b)
-        # print(type(s1.item()), type(s2.item()))
         final_grad_w += out(error_fn(s1, y[i]), error_fn(s2, y[i]), m, z_w)
 
         # Bias
@@ -68,7 +56,6 @@ def get_grad(w, b, X, y, m = 0.01):
         mm2 = m*z_b
         s1 = sigmoid(mm1 + b + mm2)
         s2 = sigmoid(mm1 + b - mm2)
-        
         final_grad_b += out(error_fn(s1, y[i]), error_fn(s2, y[i]), m, z_b)
 
     return final_grad_w, final_grad_b
