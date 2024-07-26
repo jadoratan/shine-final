@@ -4,7 +4,7 @@ import torch.nn as nn
 # weights, bias, transpose of data, 
 # mu (used for localizing), 
 # z (sample of gaussian distribution, must stay the same across the whole dataset, 
-# can be different for weights/biases thugh) 
+# can be different for weights/biases though) 
 
 def get_grad_b(w, b, X, m = 0.01):
     d = b.size()[0]
